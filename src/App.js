@@ -1,7 +1,8 @@
-import { Header, Footer, TodoItem, NewItem } from "./components";
+import { Header, TodoItem, NewItem, Search } from "./components";
 import { useState } from "react";
 
 export const App = () => {
+  const [searchItem, setSearchItem] = useState("");
   const [items, setItem] = useState([
     {
       name: "Comprar arroz",
@@ -49,31 +50,26 @@ export const App = () => {
     setItem(newItemList);
   };
 
+  const search = (e) => {
+    setSearchItem(e.target.value.toLowerCase());
+  };
+
+  const filteredItems = items.filter(
+    ({ name, description }) =>
+      name.toLowerCase().includes(searchItem) ||
+      description.toLowerCase().includes(searchItem)
+  );
+
   return (
     <main>
       <Header />
-
-      {/* <article className="panel is-primary">
-        <div className="panel-block">
-          <p className="control has-icons-left">
-            <input
-              className="input is-primary"
-              type="text"
-              placeholder="Search"
-            />
-            <span className="icon is-left">
-              <i className="fas fa-search" aria-hidden="true"></i>
-            </span>
-          </p>
-        </div>
-      </article> */}
+      <Search search={search} />
       <TodoItem
-        items={items}
+        items={filteredItems}
         handleClick={handleClick}
         removeItem={removeItem}
       />
       <NewItem addNewItem={addNewItem} />
-      <Footer />
     </main>
   );
 };
