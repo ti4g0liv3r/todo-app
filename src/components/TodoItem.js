@@ -1,125 +1,48 @@
-import styled, { css } from "styled-components";
-import {
-  AiFillCheckSquare,
-  AiOutlineBorder,
-  AiFillFile,
-  AiOutlineDelete,
-} from "react-icons/ai";
-
-const StyleUl = styled.ul`
-  padding: 0px 10px;
-  margin: 0;
-`;
-
-const StyleLi = styled.li`
-  display: flex;
-  justify-content: space-between;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  }
-  > div {
-    margin: 10px;
-  }
-`;
-
-const TodoGroup = styled.div`
-  display: flex;
-
-  > div {
-    margin: 10px;
-  }
-`;
-
-const TodoIcon = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: white;
-  border-radius: 25px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: -1px 0px 16px -6px rgba(0, 0, 0, 0.2);
-
-  > svg {
-    color: lightgray;
-    width: 30px;
-    height: 30px;
-  }
-`;
-
-const TodoTaskTitle = styled.h4`
-  font-size: 18px;
-  font-family: system-ui;
-  margin: 0px;
-  margin-bottom: 12px;
-
-  ${({ isCheck }) =>
-    isCheck &&
-    css`
-      text-decoration: line-through;
-    `}
-`;
-
-const TodoDescription = styled.p`
-  margin: 0px;
-  ${({ isCheck }) =>
-    isCheck &&
-    css`
-      text-decoration: line-through;
-    `}
-`;
-
-const TodoControls = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  > svg {
-    width: auto;
-    height: 25px;
-    margin: 10px;
-
-    &:first-child {
-      height: 20px;
-    }
-  }
-`;
+import { FaTrashAlt, FaRegCircle, FaRegCheckCircle } from "react-icons/fa";
 
 export const TodoItem = ({ items, handleClick, removeItem }) => {
   return (
-    <StyleUl>
+    <div className="content m-3">
       {items.length ? (
-        items.map(({ name, description, date, isCheck, id }) => {
+        items.map(({ id, name, description, date, isCheck }) => {
           return (
-            <StyleLi key={`item${id}`}>
-              <TodoGroup>
-                <TodoIcon>
-                  <AiFillFile />
-                </TodoIcon>
-                <div>
-                  <TodoTaskTitle isCheck={isCheck}>{name}</TodoTaskTitle>
-                  <TodoDescription isCheck={isCheck}>
-                    {description}
-                  </TodoDescription>
+            <div className="card mb-3" key={`item${id}`}>
+              <header className="card-header">
+                <p
+                  className={`card-header-title mb-0 ${
+                    isCheck && "has-text-grey-lighter"
+                  }`}
+                >
+                  {name}
+                </p>
+                <button className="card-header-icon" aria-label="more options">
+                  <span className="icon mr-4" onClick={() => handleClick(id)}>
+                    {!isCheck ? <FaRegCircle /> : <FaRegCheckCircle />}
+                  </span>
+                  <span className="icon" onClick={() => removeItem(id)}>
+                    <FaTrashAlt />
+                  </span>
+                </button>
+              </header>
+              <div className="card-content">
+                <div
+                  className={`content ${isCheck && "has-text-grey-lighter"}`}
+                >
+                  {description}
+                  <br />
+                  <time>{date && date.toDateString()}</time>
                 </div>
-              </TodoGroup>
-              <TodoControls>
-                {isCheck ? (
-                  <AiFillCheckSquare onClick={() => handleClick(id)} />
-                ) : (
-                  <AiOutlineBorder onClick={() => handleClick(id)} />
-                )}
-                <AiOutlineDelete onClick={() => removeItem(id)} />
-              </TodoControls>
-            </StyleLi>
+              </div>
+            </div>
           );
         })
       ) : (
-        <StyleLi>
-          <p>There's no item in your list</p>
-        </StyleLi>
+        <div className="box">
+          <div className="block has-text-centered">
+            There's no <strong>item</strong> in your list.
+          </div>
+        </div>
       )}
-    </StyleUl>
+    </div>
   );
 };

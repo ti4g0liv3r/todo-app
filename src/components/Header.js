@@ -1,26 +1,17 @@
-import styled from "styled-components";
-
-const StyledNav = styled.nav`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  background-color: #00807a;
-  height: 80px;
-  text-align: center;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-
-  > h1 {
-    color: white;
-  }
-`;
-
 export const Header = ({ title }) => {
   return (
-    <StyledNav>
-      <h1>{title}</h1>
-    </StyledNav>
+    <nav
+      className="navbar is-primary is-spaced "
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div className="navbar-brand">
+        <span className="navbar-item">
+          <h2 className="title is-3 has-text-white-ter ">Todo App</h2>
+        </span>
+      </div>
+      <hr className="navbar-divider"></hr>
+    </nav>
   );
 };
 
