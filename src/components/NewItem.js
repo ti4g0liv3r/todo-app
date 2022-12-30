@@ -37,7 +37,7 @@ export const NewItem = ({ addNewItem }) => {
     newItem.name.length === 0 || newItem.description.length === 0;
 
   return (
-    <div className="box">
+    <div className="content mb-3">
       <div className={`modal ${addItem && "is-active"}`}>
         <div className="modal-background"></div>
         <div className="modal-content">
@@ -94,7 +94,7 @@ export const NewItem = ({ addNewItem }) => {
           </div>
         </div>
       </div>
-      <div className="is-flex  is-flex-direction-row is-justify-content-flex-end">
+      <div className="content m-3 is-flex  is-flex-direction-row is-justify-content-flex-end">
         <button className="button is-primary" onClick={() => setAddItem(true)}>
           Add item
         </button>
